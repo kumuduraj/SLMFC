@@ -51,6 +51,7 @@ class ShopfloorWorkOrder(Document):
 		self.set_costs(se)
 
 	def on_cancel(self):
+		self.ignore_linked_doctypes = ("Shopfloor Plan",)
 		if self.stock_entry and frappe.db.get_value("Stock Entry", self.stock_entry, "docstatus") == 1:
 			frappe.get_doc("Stock Entry", self.stock_entry).cancel()
 		self.db_set("status", "Cancelled")
