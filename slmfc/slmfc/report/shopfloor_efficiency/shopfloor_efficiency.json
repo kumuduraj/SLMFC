@@ -1,0 +1,19 @@
+{
+ "add_total_row": 0,
+ "creation": "2026-09-20 00:00:00",
+ "doctype": "Report",
+ "is_standard": "Yes",
+ "modified": "2026-09-20 00:00:00",
+ "module": "SLMFC",
+ "name": "Shopfloor Efficiency",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Shopfloor Work Order",
+ "report_name": "Shopfloor Efficiency",
+ "report_type": "Script Report",
+ "roles": [
+  {"role": "Manufacturing Manager"},
+  {"role": "Manufacturing User"},
+  {"role": "System Manager"}
+ ]
+}
