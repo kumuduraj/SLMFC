@@ -9,7 +9,7 @@
   {"fieldname": "plan", "fieldtype": "Link", "label": "Production Plan", "options": "Custom Production Plan", "read_only": 1, "in_standard_filter": 1},
   {"fieldname": "plan_date", "fieldtype": "Date", "label": "Plan Date", "read_only": 1, "in_list_view": 1},
   {"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "read_only": 1},
-  {"fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "Open\nPartially Completed\nCompleted", "default": "Open", "read_only": 1, "no_copy": 1, "in_list_view": 1, "in_standard_filter": 1},
+  {"fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "Open\nPartially Completed\nCompleted\nCancelled", "default": "Open", "read_only": 1, "no_copy": 1, "in_list_view": 1, "in_standard_filter": 1},
   {"fieldname": "column_break_1", "fieldtype": "Column Break"},
   {"fieldname": "item_code", "fieldtype": "Link", "label": "Item", "options": "Item", "read_only": 1, "in_list_view": 1},
   {"fieldname": "item_name", "fieldtype": "Data", "label": "Item Name", "read_only": 1},

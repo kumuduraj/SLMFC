@@ -293,15 +293,12 @@ class CustomProductionPlan(Document):
 				)
 
 	def on_cancel(self):
-		for r in self.items:
-			if r.work_order:
-				frappe.db.set_value("Custom Production Plan Item", r.name, "work_order", None)
 		for wo in self.work_orders():
 			for entry in frappe.get_all(
 				"Custom Production Entry", filters={"work_order": wo, "docstatus": 0}, pluck="name"
 			):
 				frappe.delete_doc("Custom Production Entry", entry, ignore_permissions=True)
-			frappe.delete_doc("Custom Work Order", wo, ignore_permissions=True)
+			frappe.db.set_value("Custom Work Order", wo, "status", "Cancelled")
 		if (
 			self.material_request
 			and frappe.db.get_value("Material Request", self.material_request, "docstatus") == 1

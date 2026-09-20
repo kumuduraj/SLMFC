@@ -17,6 +17,8 @@ class CustomProductionEntry(Document):
 		if not self.work_order:
 			frappe.throw(_("Select a Work Order"))
 		wo = frappe.get_doc("Custom Work Order", self.work_order)
+		if wo.status == "Cancelled":
+			frappe.throw(_("Work Order {0} is cancelled").format(wo.name))
 		if self.docstatus == 0:
 			self.copy_from_work_order(wo)
 			other = frappe.db.get_value(
@@ -307,6 +309,8 @@ def make_production_entry(work_order):
 	wo = frappe.get_doc("Custom Work Order", work_order)
 	wo.check_permission("read")
 	frappe.has_permission("Custom Production Entry", "create", throw=True)
+	if wo.status == "Cancelled":
+		frappe.throw(_("Work Order {0} is cancelled").format(work_order))
 	if wo.status == "Completed":
 		frappe.throw(_("Work Order {0} is already completed").format(work_order))
 	draft = frappe.db.get_value("Custom Production Entry", {"work_order": work_order, "docstatus": 0}, "name")
