@@ -3,7 +3,7 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import flt, getdate, nowdate
 
-from slmfc.utils import series
+from slmfc.utils import round_up, series
 
 
 class ShopfloorPlan(Document):
@@ -82,6 +82,7 @@ class ShopfloorPlan(Document):
 			)
 			for b in bom.items:
 				per = flt(b.stock_qty) / base
+				std = round_up(per * flt(r.qty))
 				wo.append(
 					"items",
 					{
@@ -89,8 +90,8 @@ class ShopfloorPlan(Document):
 						"item_name": b.item_name,
 						"uom": b.stock_uom,
 						"qty_per_unit": per,
-						"required_qty": flt(per * flt(r.qty), 6),
-						"consumed_qty": flt(per * flt(r.qty), 6),
+						"required_qty": std,
+						"consumed_qty": std,
 					},
 				)
 			wo.flags.ignore_permissions = True
