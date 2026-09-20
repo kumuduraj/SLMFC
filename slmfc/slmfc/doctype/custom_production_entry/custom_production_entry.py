@@ -108,7 +108,14 @@ class CustomProductionEntry(Document):
 			self.batch_no = suggest_batch(self.item_code, self.posting_date)
 		res = batch_status(self.batch_no, self.item_code, self.work_order)
 		if res["status"] == "duplicate":
-			frappe.throw(res["message"])
+			if self.batch_mode == "Auto":
+				old = self.batch_no
+				self.batch_no = suggest_batch(self.item_code, self.posting_date)
+				frappe.msgprint(
+					_("Batch {0} is already used. Batch {1} was assigned instead.").format(old, self.batch_no)
+				)
+			else:
+				frappe.throw(res["message"])
 
 	# ---------------------------------------------------------------- submit
 	def before_submit(self):
