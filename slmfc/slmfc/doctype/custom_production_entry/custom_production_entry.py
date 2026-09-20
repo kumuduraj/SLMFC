@@ -34,6 +34,8 @@ class CustomProductionEntry(Document):
 				)
 		self.check_output(wo)
 		self.calculate_rows()
+		if self.docstatus == 0:
+			set_wip_columns(self)
 		self.validate_batch()
 
 	def copy_from_work_order(self, wo):
@@ -291,6 +293,27 @@ def batch_status(batch_no, item_code, work_order=None):
 	return {"status": "duplicate", "message": _("Batch {0} already exists").format(batch_no)}
 
 
+def wip_balance(item_code, warehouse):
+	"""On-hand quantity of the item in the WIP warehouse (Bin actual_qty)."""
+	return flt(
+		frappe.db.get_value("Bin", {"item_code": item_code, "warehouse": warehouse}, "actual_qty") or 0, 3
+	)
+
+
+def set_wip_columns(doc):
+	"""Fill the informational In WIP and Short columns of a draft entry."""
+	for i in doc.items:
+		i.wip_qty = wip_balance(i.item_code, doc.wip_warehouse)
+		i.short_qty = flt(max(0, flt(i.consumed_qty) - flt(i.wip_qty)), 3)
+
+
+@frappe.whitelist()
+def get_wip_balances(warehouse, item_codes):
+	"""Current WIP on-hand per item, for the Refresh WIP Stock button."""
+	frappe.has_permission("Custom Production Entry", "read", throw=True)
+	return {c: wip_balance(c, warehouse) for c in frappe.parse_json(item_codes)}
+
+
 @frappe.whitelist()
 def suggest_batch_no(item_code, posting_date=None):
 	frappe.has_permission("Custom Production Entry", "read", throw=True)
@@ -333,6 +356,7 @@ def make_production_entry(work_order):
 		doc.batch_no = suggest_batch(wo.item_code, doc.posting_date)
 	for i in wo.items:
 		std = cum_std(i.qty_per_unit, doc.cum_before, doc.output_qty)
+		wip = wip_balance(i.item_code, doc.wip_warehouse)
 		doc.append(
 			"items",
 			{
@@ -342,6 +366,8 @@ def make_production_entry(work_order):
 				"qty_per_unit": i.qty_per_unit,
 				"required_qty": std,
 				"consumed_qty": std,
+				"wip_qty": wip,
+				"short_qty": flt(max(0, std - wip), 3),
 			},
 		)
 	doc.completion_pct = (
