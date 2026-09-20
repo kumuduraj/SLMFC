@@ -3,7 +3,7 @@ const TOLERANCE_PCT = 2;
 function recalc_row(cdt, cdn) {
   const r = locals[cdt][cdn];
   const v = flt(r.consumed_qty) - flt(r.required_qty);
-  frappe.model.set_value(cdt, cdn, "variance_qty", flt(v, 6));
+  frappe.model.set_value(cdt, cdn, "variance_qty", flt(v, 3));
   frappe.model.set_value(cdt, cdn, "variance_pct", r.required_qty ? flt((v / r.required_qty) * 100, 2) : 0);
 }
 
@@ -24,7 +24,7 @@ frappe.ui.form.on("Shopfloor Work Order", {
   output_qty(frm) {
     if (frm.doc.docstatus !== 0) return;
     (frm.doc.items || []).forEach((r) => {
-      const std = flt(r.qty_per_unit * flt(frm.doc.output_qty), 6);
+      const std = Math.ceil(flt(r.qty_per_unit * flt(frm.doc.output_qty)) * 1000 - 1e-6) / 1000;
       frappe.model.set_value(r.doctype, r.name, "required_qty", std);
       frappe.model.set_value(r.doctype, r.name, "consumed_qty", std);
     });
@@ -36,7 +36,7 @@ frappe.ui.form.on("Shopfloor Work Order Item", {
   consumed_qty(frm, cdt, cdn) {
     recalc_row(cdt, cdn);
     const r = locals[cdt][cdn];
-    if (Math.abs(flt(r.variance_pct)) > TOLERANCE_PCT) {
+    if (Math.abs(flt(r.variance_pct)) > TOLERANCE_PCT && Math.abs(flt(r.variance_qty)) > 0.005) {
       frappe.show_alert({
         message: __("{0}: variance {1}%. A reason is required.", [r.item_code, r.variance_pct]),
         indicator: "orange",

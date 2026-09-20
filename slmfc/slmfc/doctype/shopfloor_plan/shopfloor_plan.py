@@ -81,7 +81,7 @@ class ShopfloorPlan(Document):
         need = {}
         for wo in wos:
             for i in wo.items:
-                need[i.item_code] = need.get(i.item_code, 0) + flt(i.required_qty)
+                need[i.item_code] = need.get(i.item_code, 0) + flt(i.consumed_qty)
 
         today = getdate(nowdate())
         sched = max(getdate(self.plan_date), today)

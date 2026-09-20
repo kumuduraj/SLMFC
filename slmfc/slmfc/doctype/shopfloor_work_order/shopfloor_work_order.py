@@ -3,9 +3,10 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import flt
 
-from slmfc.utils import series
+from slmfc.utils import round_up, series
 
 TOLERANCE_PCT = 2.0  # variance above this needs a reason
+MIN_VARIANCE_QTY = 0.005  # ignore variance smaller than this (ledger works in 3 decimals)
 
 
 class ShopfloorWorkOrder(Document):
@@ -19,8 +20,11 @@ class ShopfloorWorkOrder(Document):
         for i in self.items:
             if flt(i.consumed_qty) < 0:
                 frappe.throw(_("Row {0}: Actual Qty cannot be negative").format(i.idx))
-            i.required_qty = flt(flt(i.qty_per_unit) * out, 6)
-            i.variance_qty = flt(flt(i.consumed_qty) - flt(i.required_qty), 6)
+            # the stock ledger holds every item to 3 decimals: standard and actual must be
+            # the same 3-decimal numbers the Stock Entry and Material Request will carry
+            i.required_qty = round_up(flt(i.qty_per_unit) * out)
+            i.consumed_qty = round_up(i.consumed_qty)
+            i.variance_qty = flt(flt(i.consumed_qty) - flt(i.required_qty), 3)
             i.variance_pct = flt(i.variance_qty / i.required_qty * 100, 2) if flt(i.required_qty) else 0
         self.yield_pct = flt(out / flt(self.planned_qty) * 100, 2) if flt(self.planned_qty) else 0
 
@@ -30,7 +34,11 @@ class ShopfloorWorkOrder(Document):
         if not any(flt(i.consumed_qty) > 0 for i in self.items):
             frappe.throw(_("Enter actual quantity for at least one raw material"))
         for i in self.items:
-            if abs(flt(i.variance_pct)) > TOLERANCE_PCT and not (i.variance_reason or "").strip():
+            if (
+                abs(flt(i.variance_pct)) > TOLERANCE_PCT
+                and abs(flt(i.variance_qty)) > MIN_VARIANCE_QTY
+                and not (i.variance_reason or "").strip()
+            ):
                 frappe.throw(
                     _("Row {0} ({1}): variance is {2}%. Enter a Variance Reason.").format(
                         i.idx, i.item_code, i.variance_pct
