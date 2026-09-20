@@ -38,7 +38,7 @@ def execute(filters=None):
         SELECT wo.name wo, wo.plan_date, wo.item_code fg, wo.planned_qty planned,
                wo.output_qty output, wo.yield_pct, i.item_code rm,
                i.required_qty std, i.consumed_qty act, i.variance_qty `var`,
-               i.variance_pct var_pct, i.std_cost, i.actual_cost,
+               i.variance_pct var_pct, i.std_cost, i.actual_cost act_cost,
                (i.actual_cost - i.std_cost) cost_var, i.variance_reason reason
         FROM `tabShopfloor Work Order` wo
         JOIN `tabShopfloor Work Order Item` i ON i.parent = wo.name
