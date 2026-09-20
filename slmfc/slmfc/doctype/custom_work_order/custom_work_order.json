@@ -1,0 +1,42 @@
+{
+ "actions": [],
+ "autoname": "format:CWO-{YY}-{#####}",
+ "creation": "2026-09-20 09:41:16.751225",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": ["plan", "plan_date", "company", "status", "column_break_1", "item_code", "item_name", "bom", "uom", "section_qty", "planned_qty", "produced_qty", "column_break_2", "pending_qty", "completion_pct", "section_wh", "wip_warehouse", "column_break_3", "target_warehouse", "section_items", "items"],
+ "fields": [
+  {"fieldname": "plan", "fieldtype": "Link", "label": "Production Plan", "options": "Custom Production Plan", "read_only": 1, "in_standard_filter": 1},
+  {"fieldname": "plan_date", "fieldtype": "Date", "label": "Plan Date", "read_only": 1, "in_list_view": 1},
+  {"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "read_only": 1},
+  {"fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "Open\nPartially Completed\nCompleted", "default": "Open", "read_only": 1, "no_copy": 1, "in_list_view": 1, "in_standard_filter": 1},
+  {"fieldname": "column_break_1", "fieldtype": "Column Break"},
+  {"fieldname": "item_code", "fieldtype": "Link", "label": "Item", "options": "Item", "read_only": 1, "in_list_view": 1},
+  {"fieldname": "item_name", "fieldtype": "Data", "label": "Item Name", "read_only": 1},
+  {"fieldname": "bom", "fieldtype": "Link", "label": "BOM", "options": "BOM", "read_only": 1},
+  {"fieldname": "uom", "fieldtype": "Link", "label": "UOM", "options": "UOM", "read_only": 1},
+  {"fieldname": "section_qty", "fieldtype": "Section Break", "label": "Production"},
+  {"fieldname": "planned_qty", "fieldtype": "Float", "label": "Planned Qty", "precision": "3", "read_only": 1, "in_list_view": 1},
+  {"fieldname": "produced_qty", "fieldtype": "Float", "label": "Produced Qty", "precision": "3", "read_only": 1, "in_list_view": 1},
+  {"fieldname": "column_break_2", "fieldtype": "Column Break"},
+  {"fieldname": "pending_qty", "fieldtype": "Float", "label": "Pending Qty", "precision": "3", "read_only": 1, "in_list_view": 1},
+  {"fieldname": "completion_pct", "fieldtype": "Percent", "label": "Completion %", "precision": "2", "read_only": 1, "in_list_view": 1},
+  {"fieldname": "section_wh", "fieldtype": "Section Break", "label": "Warehouses"},
+  {"fieldname": "wip_warehouse", "fieldtype": "Link", "label": "WIP Warehouse", "options": "Warehouse", "read_only": 1},
+  {"fieldname": "column_break_3", "fieldtype": "Column Break"},
+  {"fieldname": "target_warehouse", "fieldtype": "Link", "label": "Finished Goods Warehouse", "options": "Warehouse", "read_only": 1},
+  {"fieldname": "section_items", "fieldtype": "Section Break", "label": "Standard Raw Materials"},
+  {"fieldname": "items", "fieldtype": "Table", "label": "Raw Materials", "options": "Custom Work Order Item", "cannot_add_rows": 1, "cannot_delete_rows": 1, "read_only": 1}
+ ],
+ "modified": "2026-09-20 09:41:16.751225",
+ "module": "SLMFC",
+ "name": "Custom Work Order",
+ "owner": "Administrator",
+ "permissions": [
+  {"read": 1, "role": "Manufacturing User"},
+  {"create": 1, "read": 1, "write": 1, "delete": 1, "role": "Manufacturing Manager"},
+  {"create": 1, "read": 1, "write": 1, "delete": 1, "role": "System Manager"}
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

@@ -1,0 +1,37 @@
+{
+ "actions": [],
+ "autoname": "format:CPP-{YY}-{#####}",
+ "creation": "2026-09-20 09:41:16.751225",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": ["plan_date", "company", "column_break_1", "wip_warehouse", "target_warehouse", "default_source_warehouse", "section_items", "items", "section_materials", "materials", "materials_signature", "section_refs", "material_request", "amended_from"],
+ "fields": [
+  {"fieldname": "plan_date", "fieldtype": "Date", "label": "Plan Date", "reqd": 1, "default": "Today", "in_list_view": 1},
+  {"fieldname": "company", "fieldtype": "Link", "label": "Company", "options": "Company", "reqd": 1},
+  {"fieldname": "column_break_1", "fieldtype": "Column Break"},
+  {"fieldname": "wip_warehouse", "fieldtype": "Link", "label": "WIP Warehouse", "options": "Warehouse", "reqd": 1},
+  {"fieldname": "target_warehouse", "fieldtype": "Link", "label": "Finished Goods Warehouse", "options": "Warehouse", "reqd": 1},
+  {"fieldname": "default_source_warehouse", "fieldtype": "Link", "label": "Default Raw Material Warehouse", "options": "Warehouse"},
+  {"fieldname": "section_items", "fieldtype": "Section Break", "label": "Manufacturing Items"},
+  {"fieldname": "items", "fieldtype": "Table", "label": "Items", "options": "Custom Production Plan Item", "reqd": 1},
+  {"fieldname": "section_materials", "fieldtype": "Section Break", "label": "Raw Material Summary"},
+  {"fieldname": "materials", "fieldtype": "Table", "label": "Raw Materials", "options": "Custom Production Plan Material"},
+  {"fieldname": "materials_signature", "fieldtype": "Data", "label": "Materials Signature", "hidden": 1, "read_only": 1, "no_copy": 1},
+  {"fieldname": "section_refs", "fieldtype": "Section Break", "label": "References"},
+  {"fieldname": "material_request", "fieldtype": "Link", "label": "Material Request", "options": "Material Request", "read_only": 1, "no_copy": 1},
+  {"fieldname": "amended_from", "fieldtype": "Link", "label": "Amended From", "options": "Custom Production Plan", "no_copy": 1, "print_hide": 1, "read_only": 1}
+ ],
+ "is_submittable": 1,
+ "modified": "2026-09-20 09:41:16.751225",
+ "module": "SLMFC",
+ "name": "Custom Production Plan",
+ "owner": "Administrator",
+ "permissions": [
+  {"create": 1, "read": 1, "write": 1, "submit": 1, "cancel": 1, "amend": 1, "delete": 1, "role": "Manufacturing Manager"},
+  {"create": 1, "read": 1, "write": 1, "submit": 1, "cancel": 1, "role": "Manufacturing User"},
+  {"create": 1, "read": 1, "write": 1, "submit": 1, "cancel": 1, "amend": 1, "delete": 1, "role": "System Manager"}
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

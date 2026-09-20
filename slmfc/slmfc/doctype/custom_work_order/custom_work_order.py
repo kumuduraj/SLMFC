@@ -1,0 +1,36 @@
+import frappe
+from frappe.model.document import Document
+from frappe.utils import flt
+
+QTY_TOLERANCE = 0.0005
+
+
+class CustomWorkOrder(Document):
+	def refresh_progress(self):
+		"""Recompute produced/pending/status from the submitted Production Entries."""
+		produced = flt(
+			frappe.db.sql(
+				"select coalesce(sum(output_qty), 0) from `tabCustom Production Entry` where work_order = %s and docstatus = 1",
+				self.name,
+			)[0][0],
+			3,
+		)
+		planned = flt(self.planned_qty, 3)
+		if produced <= 0:
+			status = "Open"
+		elif produced >= planned - QTY_TOLERANCE:
+			status = "Completed"
+		else:
+			status = "Partially Completed"
+		self.db_set(
+			{
+				"produced_qty": produced,
+				"pending_qty": flt(planned - produced, 3),
+				"completion_pct": flt(produced / planned * 100, 2) if planned else 0,
+				"status": status,
+			}
+		)
+
+
+def update_work_order(name):
+	frappe.get_doc("Custom Work Order", name).refresh_progress()

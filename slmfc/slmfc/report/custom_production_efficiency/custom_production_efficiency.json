@@ -1,0 +1,19 @@
+{
+ "add_total_row": 0,
+ "creation": "2026-09-20 09:41:16.751225",
+ "doctype": "Report",
+ "is_standard": "Yes",
+ "modified": "2026-09-20 09:41:16.751225",
+ "module": "SLMFC",
+ "name": "Custom Production Efficiency",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Custom Production Entry",
+ "report_name": "Custom Production Efficiency",
+ "report_type": "Script Report",
+ "roles": [
+  {"role": "Manufacturing Manager"},
+  {"role": "Manufacturing User"},
+  {"role": "System Manager"}
+ ]
+}

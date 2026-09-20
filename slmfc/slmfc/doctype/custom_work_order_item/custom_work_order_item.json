@@ -1,0 +1,23 @@
+{
+ "actions": [],
+ "creation": "2026-09-20 09:41:16.751225",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": ["item_code", "item_name", "uom", "qty_per_unit", "required_qty"],
+ "fields": [
+  {"fieldname": "item_code", "fieldtype": "Link", "label": "Item", "options": "Item", "read_only": 1, "in_list_view": 1},
+  {"fieldname": "item_name", "fieldtype": "Data", "label": "Item Name", "read_only": 1},
+  {"fieldname": "uom", "fieldtype": "Link", "label": "UOM", "options": "UOM", "read_only": 1, "in_list_view": 1},
+  {"fieldname": "qty_per_unit", "fieldtype": "Float", "label": "Qty per Unit", "precision": "9", "read_only": 1},
+  {"fieldname": "required_qty", "fieldtype": "Float", "label": "Total for Planned Qty", "precision": "3", "read_only": 1, "in_list_view": 1}
+ ],
+ "istable": 1,
+ "modified": "2026-09-20 09:41:16.751225",
+ "module": "SLMFC",
+ "name": "Custom Work Order Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
