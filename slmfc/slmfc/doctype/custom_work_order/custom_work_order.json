@@ -33,9 +33,9 @@
  "name": "Custom Work Order",
  "owner": "Administrator",
  "permissions": [
-  {"read": 1, "role": "Manufacturing User"},
-  {"create": 1, "read": 1, "write": 1, "delete": 1, "role": "Manufacturing Manager"},
-  {"create": 1, "read": 1, "write": 1, "delete": 1, "role": "System Manager"}
+  {"read": 1, "report": 1, "role": "Manufacturing User"},
+  {"create": 1, "read": 1, "report": 1, "write": 1, "delete": 1, "role": "Manufacturing Manager"},
+  {"create": 1, "read": 1, "report": 1, "write": 1, "delete": 1, "role": "System Manager"}
  ],
  "sort_field": "modified",
  "sort_order": "DESC"
