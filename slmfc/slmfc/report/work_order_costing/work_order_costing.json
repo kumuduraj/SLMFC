@@ -1,0 +1,19 @@
+{
+ "add_total_row": 1,
+ "creation": "2026-09-21 06:00:00.000000",
+ "doctype": "Report",
+ "is_standard": "Yes",
+ "modified": "2026-09-21 06:00:00.000000",
+ "module": "SLMFC",
+ "name": "Work Order Costing",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Custom Work Order",
+ "report_name": "Work Order Costing",
+ "report_type": "Script Report",
+ "roles": [
+  {"role": "Manufacturing Manager"},
+  {"role": "Manufacturing User"},
+  {"role": "System Manager"}
+ ]
+}

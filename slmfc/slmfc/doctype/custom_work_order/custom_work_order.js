@@ -31,5 +31,10 @@ frappe.ui.form.on("Custom Work Order", {
       () => frappe.set_route("List", "Custom Production Entry", { work_order: frm.doc.name }),
       __("View")
     );
+    frm.add_custom_button(
+      __("Costing"),
+      () => frappe.set_route("query-report", "Work Order Costing", { work_order: frm.doc.name }),
+      __("View")
+    );
   },
 });
